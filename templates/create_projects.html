@@ -5,7 +5,7 @@
     <h3 class="center-align">Create a new project</h3>
 
     <div class="row">
-        <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('create_project') }}">
+        <form class="col s12 m10 offset-m1" method="POST" action="{{ url_for('create_project') }}">
             <div class="card-panel white">
                 <!-- project information -->
                 <div class="row">
@@ -29,6 +29,7 @@
                         <label for="project_start_date">Start Date</label>
                     </div>
                 </div>
+                <!-- category 1 -->
                 <div class="row">
                     <div class="input-field col s5 m5">
                         <input id="category_name_1" name="category_name_1" type="text" 
@@ -36,36 +37,63 @@
                         <label for="category_name_1">Category Name</label>
                     </div>
                     <div class="input-field col s5 m5">
-                        <select id="category_measure_1" name="category_measure_1" required>
+                        <select id="category_measure_1" name="category_measure_1" class="validate" required>
                             <option value="" class="grey-text" disabled selected>Measured in</option>
                             <option value="per_unit">per unit</option>
                             <option value="per_hour">per hour</option>
                             <option value="per_day">per day</option>
                         </select>   
                     </div>
-                    <div class="col s2 m2">
-                        <a href="#"><i class="fas fa-plus"></i></a>
-                    </div>
                 </div>
-
+                <!-- category 2 -->
                 <div class="row">
                     <div class="input-field col s5 m5">
-                        <input id="category_name_1" name="category_name_1" type="text" 
-                            minlength="5" maxlength="50"  class="validate" required>
-                        <label for="category_name_1">Category Name</label>
+                        <input id="category_name_2" name="category_name_2" type="text" 
+                            minlength="5" maxlength="50"  class="validate" >
+                        <label for="category_name_2">Category Name</label>
                     </div>
                     <div class="input-field col s5 m5">
-                        <select id="category_measure_1" name="category_measure_1" required>
+                        <select id="category_measure_2" name="category_measure_2" class="validate" >
                             <option value="" class="grey-text" disabled selected>Measured in</option>
                             <option value="per_unit">per unit</option>
                             <option value="per_hour">per hour</option>
                             <option value="per_day">per day</option>
                         </select>   
                     </div>
-                    <div class="col s2 m2">
-                        <a href="#"><i class="fas fa-plus"></i></a>
+                </div>
+                <!-- category 3 -->
+                <div class="row">
+                    <div class="input-field col s5 m5">
+                        <input id="category_name_3" name="category_name_3" type="text" 
+                            minlength="5" maxlength="50"  class="validate" >
+                        <label for="category_name_3">Category Name</label>
+                    </div>
+                    <div class="input-field col s5 m5">
+                        <select id="category_measure_3" name="category_measure_3" class="validate" >
+                            <option value="" class="grey-text" disabled selected>Measured in</option>
+                            <option value="per_unit">per unit</option>
+                            <option value="per_hour">per hour</option>
+                            <option value="per_day">per day</option>
+                        </select>   
                     </div>
                 </div>
+                <!-- category 4 -->
+                <div class="row">
+                    <div class="input-field col s5 m5">
+                        <input id="category_name_4" name="category_name_4" type="text" 
+                            minlength="5" maxlength="50"  class="validate" >
+                        <label for="category_name_4">Category Name</label>
+                    </div>
+                    <div class="input-field col s5 m5">
+                        <select id="category_measure_4" name="category_measure_4" class="validate" >
+                            <option value="" class="grey-text" disabled selected>Measured in</option>
+                            <option value="per_unit">per unit</option>
+                            <option value="per_hour">per hour</option>
+                            <option value="per_day">per day</option>
+                        </select>   
+                    </div>
+                </div>
+               
                 <!-- submit button -->
                 <div class="row center-align">
                     <button class="teal btn-large" type="submit" name="action">Submit
