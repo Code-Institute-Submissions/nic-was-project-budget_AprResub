@@ -18,8 +18,8 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 @app.route("/")
-@app.route("/get_projects")
-def get_projects():
+@app.route("/projects")
+def projects():
     projects = mongo.db.projects.find()
     return render_template("projects.html", projects=projects)
 
