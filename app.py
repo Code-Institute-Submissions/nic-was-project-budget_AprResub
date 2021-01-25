@@ -61,7 +61,9 @@ def login():
             if check_password_hash(
                 existing_email["password"], request.form.get("password")):
                     session["user"] = request.form.get("email").lower()
-                    flash("Welcome, {}!".format(existing_email["first_name"].capitalize()))
+                    flash("Welcome, {}!".format(
+                        existing_email["first_name"].capitalize()))
+                    return redirect(url_for("dashboard", username=session["user"]))
             else:
                 # invalid password match
                 flash("Incorrect login details")
@@ -72,6 +74,12 @@ def login():
 
     return render_template("login.html")
        
+
+@app.route("/dashboard/<username>", methods=["GET", "POST"])
+def dashboard(username):
+    username = mongo.db.users.find_one({"user_email": session["user"]})["first_name"]
+    return render_template("dashboard.html", username=username)
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

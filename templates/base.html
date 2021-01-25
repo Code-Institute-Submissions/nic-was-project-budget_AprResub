@@ -26,7 +26,7 @@
                 <li><a href="{{ url_for('projects') }}">Projects</a></li>
                 <li><a href="#">Budgets</a></li>
                 <li><a href="#">Actuals</a></li>
-                <li><a href="#">Dashboard</a></li>
+                <li><a href="{{ url_for('dashboard', username=session['user']) }}">Dashboard</a></li>
                 <li><a href="{{ url_for('login') }}">Login</a></li>
                 <li><a href="{{ url_for('register') }}">Register</a></li>
               </ul>
@@ -40,7 +40,7 @@
             <li><a href="{{ url_for('projects') }}">Projects</a></li>
             <li><a href="#">Budgets</a></li>
             <li><a href="#">Actuals</a></li>
-            <li><a href="#">Dashboard</a></li>
+            <li><a href="{{ url_for('dashboard', username=session['user']) }}">Dashboard</a></li>
             <li><a href="{{ url_for('login') }}">Login</a></li>
             <li><a href="{{ url_for('register') }}">Register</a></li>
           </ul>
