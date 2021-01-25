@@ -14,18 +14,27 @@
 <ul class="collapsible">
     {% for project in projects %}
     <li>
-        <div class="collapsible-header"><i class="fas fa-caret-down"></i>
-            <strong>{{ project.project_name }} ({{ project.project_currency }})<br></strong>
+        <div class="collapsible-header">
+            <div class="col s3">
+                <i class="fas fa-caret-down"></i>
+                <a href="" class="btn-small teal lighten-2">Done</a>
+                <a href="{{ url_for('edit_project', project_id=project._id) }}" class="btn-small red lighten-3">Edit</a>
+            </div>
+            <div class="col s9">
+                <strong>{{ project.project_name.upper() }} ({{ project.project_currency.upper() }})</strong>
+            </div>
         </div>
         <div class="collapsible-body">
            
-            Start date: {{ project.project_start_date }}<br>
+            <p>Project Start date: {{ project.project_start_date }}</p>
             <div class="row teal">
                 <h5>Categories</h5>
                 {% for category in project.project_categories %}
-                    <div class="col s12 m12">    
-                        {{ category.category_name }} measured {{ category.category_measure }}
-                    </div>
+                    {% if category.category_name %}
+                        <div class="col s12 m12">    
+                            {{ category.category_name }} <em class="white-text">measured</em> {{ category.category_measure }}
+                        </div>
+                    {% endif %}
                 {% endfor %}
         </div>
     </li>

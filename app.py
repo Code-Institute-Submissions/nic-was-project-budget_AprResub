@@ -20,7 +20,7 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/projects")
 def projects():
-    projects = mongo.db.projects.find()
+    projects = list(mongo.db.projects.find())
     return render_template("projects.html", projects=projects)
 
 
@@ -93,9 +93,38 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/create_project")
+@app.route("/create_project", methods=["GET", "POST"])
 def create_project():
+    if request.method == "POST":
+        project_categories = [
+            {"category_name": request.form.get("category_name_1"),
+            "category_measure": request.form.get("category_measure_1")} ,
+                {"category_name": request.form.get("category_name_2"),   
+                "category_measure": request.form.get("category_measure_2")} ,
+                {"category_name": request.form.get("category_name_3"),
+                "category_measure": request.form.get("category_measure_3")} ,
+                {"category_name": request.form.get("category_name_4"),
+                "category_measure": request.form.get("category_measure_4")}
+        ]
+
+        project = {
+            "created_by": session["user"],
+            "project_name": request.form.get("project_name"),
+            "project_currency": request.form.get("project_currency"),
+            "project_start_date": request.form.get("project_start_date"),
+            "project_categories": project_categories
+    
+        }
+        mongo.db.projects.insert_one(project)
+        flash("Project added successfully!")
+        return redirect(url_for("projects"))
     return render_template("create_projects.html")
+
+
+@app.route("/edit_project/<project_id>", methods=["GET", "POST"])
+def edit_project(project_id):
+    project = mongo.db.projects.find_one({"_id": ObjectId(project_id)})
+    return render_template("edit_project.html", project=project)
 
 
 if __name__ == "__main__":
