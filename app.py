@@ -49,6 +49,29 @@ def register():
     return render_template("register.html")
 
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        # check if email address already exists
+        existing_email = mongo.db.users.find_one(
+            {"user_email": request.form.get("email").lower()})
+
+        if existing_email:
+            # check to see if password entered by user matches hashed password in db
+            if check_password_hash(
+                existing_email["password"], request.form.get("password")):
+                    session["user"] = request.form.get("email").lower()
+                    flash("Welcome, {}!".format(existing_email["first_name"].capitalize()))
+            else:
+                # invalid password match
+                flash("Incorrect login details")
+                return redirect(url_for("login"))
+        else:
+            flash("Incorrect login details")
+            return redirect(url_for("login"))
+
+    return render_template("login.html")
+       
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
