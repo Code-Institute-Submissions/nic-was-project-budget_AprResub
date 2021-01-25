@@ -7,7 +7,7 @@
     <div class="row">
         <form class="col s12 m10 offset-m1" method="POST" action="{{ url_for('create_project') }}">
             <div class="card-panel white">
-                <!-- project information -->
+                <!-- project name -->
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="project_name" name="project_name" type="text" 
@@ -15,6 +15,7 @@
                         <label for="project_name">Project Name</label>
                     </div>
                 </div>
+                <!-- currency -->
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="project_currency" name="project_currency" type="text" 
@@ -22,6 +23,7 @@
                         <label for="project_currency">Currency</label>
                     </div>
                 </div>
+                <!-- date picker -->
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="project_start_date" name="project_start_date" type="text" 
@@ -39,9 +41,9 @@
                     <div class="input-field col s5 m5">
                         <select id="category_measure_1" name="category_measure_1" class="validate" required>
                             <option value="" class="grey-text" disabled selected>Measured in</option>
-                            <option value="per_unit">per unit</option>
-                            <option value="per_hour">per hour</option>
-                            <option value="per_day">per day</option>
+                            <option value="per unit">per unit</option>
+                            <option value="per hour">per hour</option>
+                            <option value="per day">per day</option>
                         </select>   
                     </div>
                 </div>
@@ -55,9 +57,9 @@
                     <div class="input-field col s5 m5">
                         <select id="category_measure_2" name="category_measure_2" class="validate" >
                             <option value="" class="grey-text" disabled selected>Measured in</option>
-                            <option value="per_unit">per unit</option>
-                            <option value="per_hour">per hour</option>
-                            <option value="per_day">per day</option>
+                            <option value="per unit">per unit</option>
+                            <option value="per hour">per hour</option>
+                            <option value="per day">per day</option>
                         </select>   
                     </div>
                 </div>
@@ -71,9 +73,9 @@
                     <div class="input-field col s5 m5">
                         <select id="category_measure_3" name="category_measure_3" class="validate" >
                             <option value="" class="grey-text" disabled selected>Measured in</option>
-                            <option value="per_unit">per unit</option>
-                            <option value="per_hour">per hour</option>
-                            <option value="per_day">per day</option>
+                            <option value="per unit">per unit</option>
+                            <option value="per hour">per hour</option>
+                            <option value="per day">per day</option>
                         </select>   
                     </div>
                 </div>
@@ -87,16 +89,16 @@
                     <div class="input-field col s5 m5">
                         <select id="category_measure_4" name="category_measure_4" class="validate" >
                             <option value="" class="grey-text" disabled selected>Measured in</option>
-                            <option value="per_unit">per unit</option>
-                            <option value="per_hour">per hour</option>
-                            <option value="per_day">per day</option>
+                            <option value="per unit">per unit</option>
+                            <option value="per hour">per hour</option>
+                            <option value="per day">per day</option>
                         </select>   
                     </div>
                 </div>
                
                 <!-- submit button -->
                 <div class="row center-align">
-                    <button class="teal btn-large" type="submit" name="action">Submit
+                    <button class="teal btn-large" type="submit">Submit
                         <i class="fas fa-sign-in-alt right"></i>
                       </button>
                 </div>
