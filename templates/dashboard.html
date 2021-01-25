@@ -11,4 +11,25 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col s12 m8 offset-m2">
+            <div class="card-panel">
+                {% for project in projects %}
+                    {{ project.user_email }}<br>
+                    {{ project.project_name }}<br>
+                    {{ project.project_currency }}<br>
+                    {{ project.project_start_date }}<br>
+
+                    {% for category in project.project_categories %}
+                        {{ category.category_name }}  ({{ category.category_measure }})<br>
+                    {% endfor %}
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+
+   
+
+
+
   {% endblock %}

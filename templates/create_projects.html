@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+    <h3 class="center-align">Create New Projects</h3>
+
+    <div class="row">
+        <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('create_project') }}">
+            <div class="card-panel white">
+                <!-- project information -->
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="project_name" name="project_name" type="text" class="validate">
+                        <label for="project_name">Project Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="project_currency" name="project_currency" type="text" class="validate">
+                        <label for="project_currency">Currency</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="project_start_date" name="project_start_date" type="date" class="validate">
+                        <label for="project_start_date">Start Date</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s5 m5">
+                        <input id="category_name" name="category_name" type="text" class="validate">
+                        <label for="category_name">Category Name</label>
+                    </div>
+               
+                    <div class="input-field col s5 m5">
+                        <select id="category_measure" name="category_measure">
+                        <option value="" class="grey-text" disabled selected>Measured in</option>
+                        <option value="per_unit">per unit</option>
+                        <option value="per_hour">per hour</option>
+                        <option value="per_day">per day</option>
+                        </select>
+                    </div>
+                    <div class="col s2 m2">
+                        <a href="#"><i class="fas fa-plus"></i></a>
+                    </div>
+                </div>
+                <!-- submit button -->
+                <div class="row center-align">
+                    <button class="teal btn-large" type="submit" name="action">Submit
+                        <i class="fas fa-sign-in-alt right"></i>
+                      </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- <div class="row">
+        <div class="col">
+            <p class="center-align">
+                Already registered?
+                <a href="{{ url_for ('login')}}">Login</a>
+            </p>
+        </div>
+    </div> -->
+
+  {% endblock %}
