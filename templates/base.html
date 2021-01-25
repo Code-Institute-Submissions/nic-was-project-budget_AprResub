@@ -27,23 +27,15 @@
                     <li><a href="#">Home</a></li>
                     {% if session.user %}
                         <li><a href="{{ url_for('dashboard', username=session['user']) }}">Dashboard</a></li>
-                        <!-- Dropdown Trigger for managing data-->
-                        <li><a class="dropdown-trigger teal darken-3" href="#!" data-target="dropdown1">Add/Update<i class="fas fa-caret-down right"></i></a></li>
                         <li><a href="{{ url_for('create_project') }}">Create a project</a></li>
+                        <li><a href="{{ url_for('projects') }}">Projects</a></li>
+                        <li><a href="#">Budgets</a></li>
+                        <li><a href="#">Actuals</a></li>
                         <li><a href="{{ url_for('logout') }}">Logout</a></li>
                     {% else %}
                         <li><a href="{{ url_for('login') }}">Login</a></li>
                         <li><a href="{{ url_for('register') }}">Register</a></li>
-                        
                     {% endif %}
-                </ul>
-                <!-- Dropdown Structure for managing data-->
-                <ul id='dropdown1' class='dropdown-content'>
-                    <li><a href="{{ url_for('create_project') }}">Create a project</a></li>
-                    <li><a href="#">Budgets</a></li>
-                    <li><a href="#">Actuals</a></li>
-                </ul>
-
             </div>
           </nav>
 
@@ -52,9 +44,11 @@
             <li><h5 class="center-align grey-text text-shadow">project budget</h5></a></li>  
             <li><a href="#">Home</a></li>
             {% if session.user %}
-               <!-- Dropdown Trigger for managing data-->
                 <li><a href="{{ url_for('dashboard', username=session['user']) }}">Dashboard</a></li>
-                <li><a class="dropdown-trigger teal darken-3 white-text" href="#!" data-target="dropdown1">Add/Update<i class="fas fa-caret-down white-text right"></i></a></li>
+                <li><a href="{{ url_for('create_project') }}">Create a project</a></li>
+                <li><a href="{{ url_for('projects') }}">Projects</a></li>
+                <li><a href="#">Budgets</a></li>
+                <li><a href="#">Actuals</a></li>
                 <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% else %}
                 <li><a href="{{ url_for('login') }}">Login</a></li>
