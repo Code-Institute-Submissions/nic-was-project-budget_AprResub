@@ -23,12 +23,16 @@
               <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
               <ul class="right hide-on-med-and-down">
                 <li><a href="#">Home</a></li>
-                <li><a href="{{ url_for('projects') }}">Projects</a></li>
-                <li><a href="#">Budgets</a></li>
-                <li><a href="#">Actuals</a></li>
-                <li><a href="{{ url_for('dashboard', username=session['user']) }}">Dashboard</a></li>
-                <li><a href="{{ url_for('login') }}">Login</a></li>
-                <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% if session.user %}
+                    <li><a href="{{ url_for('projects') }}">Projects</a></li>
+                    <li><a href="#">Budgets</a></li>
+                    <li><a href="#">Actuals</a></li>
+                    <li><a href="{{ url_for('dashboard', username=session['user']) }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
               </ul>
             </div>
           </nav>
@@ -37,12 +41,16 @@
           <ul class="sidenav" id="mobile-demo">
             <li><h5 class="center-align grey-text text-shadow">project budget</h5></a></li>  
             <li><a href="#">Home</a></li>
-            <li><a href="{{ url_for('projects') }}">Projects</a></li>
-            <li><a href="#">Budgets</a></li>
-            <li><a href="#">Actuals</a></li>
-            <li><a href="{{ url_for('dashboard', username=session['user']) }}">Dashboard</a></li>
-            <li><a href="{{ url_for('login') }}">Login</a></li>
-            <li><a href="{{ url_for('register') }}">Register</a></li>
+            {% if session.user %}
+                <li><a href="{{ url_for('projects') }}">Projects</a></li>
+                <li><a href="#">Budgets</a></li>
+                <li><a href="#">Actuals</a></li>
+                <li><a href="{{ url_for('dashboard', username=session['user']) }}">Dashboard</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+            {% endif %}
           </ul>
 
     </header>

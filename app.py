@@ -78,7 +78,19 @@ def login():
 @app.route("/dashboard/<username>", methods=["GET", "POST"])
 def dashboard(username):
     username = mongo.db.users.find_one({"user_email": session["user"]})["first_name"]
-    return render_template("dashboard.html", username=username)
+
+    if session["user"]:
+        return render_template("dashboard.html", username=username)
+
+    return redirect(url_for("login"))
+
+
+@app.route("/logout")
+def logout():
+    # remove user from session cookies
+    flash("You have logged out successfully")
+    session.pop("user")
+    return redirect(url_for("login"))
 
 
 if __name__ == "__main__":
