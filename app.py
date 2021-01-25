@@ -150,6 +150,13 @@ def edit_project(project_id):
     return render_template("edit_project.html", project=project)
 
 
+@app.route("/delete_project/<project_id>")
+def delete_project(project_id):
+    mongo.db.projects.remove({"_id": ObjectId(project_id)})
+    flash("Project deleted successfully!")
+    return redirect(url_for("projects"))
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
