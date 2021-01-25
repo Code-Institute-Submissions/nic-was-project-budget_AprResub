@@ -24,6 +24,32 @@ def projects():
     return render_template("projects.html", projects=projects)
 
 
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        # check if email address already exists
+        existing_email = mongo.db.users.find_one(
+            {"user_email": request.form.get("email").lower()})
+        
+        if existing_email:
+            flash("That email address is already registered, please try again")
+            return redirect(url_for("register"))
+        
+        register = {
+            "first_name": request.form.get("first_name").lower(),
+            "last_name": request.form.get("last_name").lower(),
+            "user_email": request.form.get("email").lower(),
+            "password": generate_password_hash(request.form.get("password"))
+        }
+        mongo.db.users.insert_one(register)
+
+        # put new user email address into session cookie
+        session["user"] = request.form.get("email").lower()
+        flash("You have registered successfully!")
+    return render_template("register.html")
+
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
