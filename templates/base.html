@@ -16,24 +16,39 @@
 
     <header>
 
+
+
+
         <!-- main top navbar -->
+
+       
+        
+
         <nav class="nav-extended text-shadow #424242 grey darken-3"> 
             <div class="nav-wrapper">
-              <a href="{{ url_for('projects') }}" class="brand-logo">project budget</a>
-              <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
-              <ul class="right hide-on-med-and-down">
-                <li><a href="#">Home</a></li>
-                {% if session.user %}
+                <a href="{{ url_for('projects') }}" class="brand-logo">project budget</a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
+
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="#">Home</a></li>
+                    {% if session.user %}
+                        <li><a href="{{ url_for('dashboard', username=session['user']) }}">Dashboard</a></li>
+                        <!-- Dropdown Trigger for managing data-->
+                        <li><a class="dropdown-trigger teal darken-3" href="#!" data-target="dropdown1">Add/Update<i class="fas fa-caret-down right"></i></a></li>
+                        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('login') }}">Login</a></li>
+                        <li><a href="{{ url_for('register') }}">Register</a></li>
+                        
+                    {% endif %}
+                </ul>
+                <!-- Dropdown Structure for managing data-->
+                <ul id='dropdown1' class='dropdown-content'>
                     <li><a href="{{ url_for('projects') }}">Projects</a></li>
                     <li><a href="#">Budgets</a></li>
                     <li><a href="#">Actuals</a></li>
-                    <li><a href="{{ url_for('dashboard', username=session['user']) }}">Dashboard</a></li>
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                {% else %}
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                    <li><a href="{{ url_for('register') }}">Register</a></li>
-                {% endif %}
-              </ul>
+                </ul>
+
             </div>
           </nav>
 
@@ -42,10 +57,9 @@
             <li><h5 class="center-align grey-text text-shadow">project budget</h5></a></li>  
             <li><a href="#">Home</a></li>
             {% if session.user %}
-                <li><a href="{{ url_for('projects') }}">Projects</a></li>
-                <li><a href="#">Budgets</a></li>
-                <li><a href="#">Actuals</a></li>
+               <!-- Dropdown Trigger for managing data-->
                 <li><a href="{{ url_for('dashboard', username=session['user']) }}">Dashboard</a></li>
+                <li><a class="dropdown-trigger teal darken-3 white-text" href="#!" data-target="dropdown1">Add/Update<i class="fas fa-caret-down white-text right"></i></a></li>
                 <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% else %}
                 <li><a href="{{ url_for('login') }}">Login</a></li>
