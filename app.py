@@ -17,11 +17,23 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
+# Currency formats
+@app.template_filter()
+def currencyFormat(value):
+    value = float(value)
+    return "{:,.2f}".format(value)
+
 @app.route("/")
 @app.route("/projects")
 def projects():
-    projects = list(mongo.db.projects.find())
-    return render_template("projects.html", projects=projects)
+
+    if not session.get("user", None):
+        return redirect(url_for("login"))
+
+    projects = mongo.db.projects.find()
+    user = mongo.db.users.find_one({"user_email": session["user"]})
+
+    return render_template("projects.html", projects=projects, username=user["first_name"])
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -75,18 +87,27 @@ def login():
     return render_template("login.html")
        
 
-@app.route("/dashboard/<username>", methods=["GET", "POST"])
-def dashboard(username):
-    username = mongo.db.users.find_one({"user_email": session["user"]})["first_name"]
+@app.route("/dashboard", methods=["GET", "POST"])
+def dashboard():
 
+    if not session.get("user", None):
+        return redirect(url_for("login"))
+
+    user = mongo.db.users.find_one({"user_email": session["user"]})
+    projects = mongo.db.projects.find({"created_by": user["user_email"]})
+    
     if session["user"]:
-        return render_template("dashboard.html", username=username)
+        return render_template("dashboard.html", username=user["first_name"], projects=projects)
 
     return redirect(url_for("login"))
 
 
 @app.route("/logout")
 def logout():
+
+    if not session.get("user", None):
+        return redirect(url_for("login"))
+
     # remove user from session cookies
     flash("You have logged out successfully")
     session.pop("user")
@@ -95,17 +116,20 @@ def logout():
 
 @app.route("/create_project", methods=["GET", "POST"])
 def create_project():
+
+    if not session.get("user", None):
+        return redirect(url_for("login"))
+
     if request.method == "POST":
-        project_categories = [
-            {"category_name": request.form.get("category_name_1"),
-            "category_measure": request.form.get("category_measure_1")} ,
-                {"category_name": request.form.get("category_name_2"),   
-                "category_measure": request.form.get("category_measure_2")} ,
-                {"category_name": request.form.get("category_name_3"),
-                "category_measure": request.form.get("category_measure_3")} ,
-                {"category_name": request.form.get("category_name_4"),
-                "category_measure": request.form.get("category_measure_4")}
-        ]
+
+        project_categories = []
+       
+        for key in request.form.keys():
+            if "category" in key:
+                name, measure = request.form.getlist(key)
+                if not name or not measure:
+                    continue
+                project_categories.append({"name":name, "measure":measure})
 
         project = {
             "created_by": session["user"],
@@ -113,9 +137,10 @@ def create_project():
             "project_currency": request.form.get("project_currency"),
             "project_start_date": request.form.get("project_start_date"),
             "project_categories": project_categories
-    
         }
+        
         mongo.db.projects.insert_one(project)
+
         flash("Project added successfully!")
         return redirect(url_for("projects"))
     return render_template("create_projects.html")
@@ -123,17 +148,20 @@ def create_project():
 
 @app.route("/edit_project/<project_id>", methods=["GET", "POST"])
 def edit_project(project_id):
+
+    if not session.get("user", None):
+        return redirect(url_for("login"))
+
     if request.method == "POST":
-        project_categories = [
-            {"category_name": request.form.get("category_name_1"),
-            "category_measure": request.form.get("category_measure_1")} ,
-                {"category_name": request.form.get("category_name_2"),   
-                "category_measure": request.form.get("category_measure_2")} ,
-                {"category_name": request.form.get("category_name_3"),
-                "category_measure": request.form.get("category_measure_3")} ,
-                {"category_name": request.form.get("category_name_4"),
-                "category_measure": request.form.get("category_measure_4")}
-        ]
+
+        project_categories = []
+       
+        for key in request.form.keys():
+            if "category" in key:
+                name, measure = request.form.getlist(key)
+                if not name or not measure:
+                    continue
+                project_categories.append({"name":name, "measure":measure})
 
         submit = {
             "created_by": session["user"],
@@ -143,6 +171,7 @@ def edit_project(project_id):
             "project_categories": project_categories
     
         }
+
         mongo.db.projects.update({"_id": ObjectId(project_id)}, submit)
         flash("Project updated successfully!")
 
@@ -152,12 +181,31 @@ def edit_project(project_id):
 
 @app.route("/delete_project/<project_id>")
 def delete_project(project_id):
+    if not session.get("user", None):
+        return redirect(url_for("login"))
+
     mongo.db.projects.remove({"_id": ObjectId(project_id)})
     flash("Project deleted successfully!")
     return redirect(url_for("projects"))
+
+
+@app.route("/budgets")
+def budgets():
+
+    if not session.get("user", None):
+        return redirect(url_for("login"))
+
+    projects = mongo.db.projects.find()
+    budgets = mongo.db.budgets.find({"user_email": session["user"]})
+    user = mongo.db.users.find_one({"user_email": session["user"]})
+
+    return render_template("budgets.html", projects=projects, username=user["first_name"], budgets=budgets)
 
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
             debug=True)
+
+
+
