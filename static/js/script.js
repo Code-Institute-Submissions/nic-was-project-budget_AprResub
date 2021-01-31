@@ -12,12 +12,3 @@ $(document).ready(function(){
       }
     });
   });
-
-
-
-
-
-
-
-
-  
