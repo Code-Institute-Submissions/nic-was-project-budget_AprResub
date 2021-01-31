@@ -31,99 +31,36 @@
                         <label for="project_start_date">Start Date</label>
                     </div>
                 </div>
-                <!-- category 1 -->
-                <div class="row">
-                    <div class="input-field col s5 m5">
-                        <input id="category_name_1" name="category_name_1" type="text" 
-                            value="{{project.project_categories[0].category_name}}" minlength="5" maxlength="50"  class="validate" required>
-                        <label for="category_name_1">Category Name</label>
+
+                <!-- print existing categories -->
+                {% for category in project.project_categories %}
+                    <div class="row category">
+                        <div class="input-field col s5 m5">
+                            <input id="category_name_{{loop.index}}" name="category_name_{{loop.index}}" type="text" 
+                                value="{{category.name}}" minlength="5" maxlength="50"  class="validate" required>
+                            <label for="category_name_{{loop.index}}">Category Name</label>
+                        </div>
+                        <div class="input-field col s5 m5">
+                            <select id="category_measure_{{loop.index}}" name="category_measure_{{loop.index}}" class="validate" required>
+                                
+                                    <option value="{{category.measure}}" selected disabled>{{category.measure}}</option>
+                                    
+                                    <option value="per unit">per unit</option>
+                                    <option value="per hour">per hour</option>
+                                    <option value="per day">per day</option>
+                                
+                            </select>   
+                        </div>
+                        <div class="col s2 m2">
+                            <div class="btn delete-category"><i class="fas fa-times"></i>
+                            </div>
+                        </div>
                     </div>
-                    <div class="input-field col s5 m5">
-                        <select id="category_measure_1" name="category_measure_1" class="validate" required>
-                            {% if project.project_categories[0].category_measure %}
-                                <option value="{{project.project_categories[0].category_measure}}" selected>{{project.project_categories[0].category_measure}}</option>
-                                <option value="per unit">per unit</option>
-                                <option value="per hour">per hour</option>
-                                <option value="per day">per day</option>
-                            {% else %}
-                                <option value="" class="grey-text" disabled selected>Measured in</option>
-                                <option value="per unit">per unit</option>
-                                <option value="per hour">per hour</option>
-                                <option value="per day">per day</option>
-                            {% endif %}
-                        </select>   
-                    </div>
-                </div>
-                <!-- category 2 -->
-                <div class="row">
-                    <div class="input-field col s5 m5">
-                        <input id="category_name_2" name="category_name_2" type="text" 
-                            value="{{project.project_categories[1].category_name}}" minlength="5" maxlength="50"  class="validate" >
-                        <label for="category_name_2">Category Name</label>
-                    </div>
-                    <div class="input-field col s5 m5">
-                        <select id="category_measure_2" name="category_measure_2" class="validate" >
-                            {% if project.project_categories[1].category_measure %}
-                                <option value="{{project.project_categories[1].category_measure}}" selected>{{project.project_categories[1].category_measure}}</option>
-                                <option value="per unit">per unit</option>
-                                <option value="per hour">per hour</option>
-                                <option value="per day">per day</option>
-                            {% else %}
-                                <option value="" class="grey-text" disabled selected>Measured in</option>
-                                <option value="per unit">per unit</option>
-                                <option value="per hour">per hour</option>
-                                <option value="per day">per day</option>
-                            {% endif %}
-                        </select>   
-                    </div>
-                </div>
-                <!-- category 3 -->
-                <div class="row">
-                    <div class="input-field col s5 m5">
-                        <input id="category_name_3" name="category_name_3" type="text" 
-                            value="{{project.project_categories[2].category_name}}" minlength="5" maxlength="50"  class="validate" >
-                        <label for="category_name_3">Category Name</label>
-                    </div>
-                    <div class="input-field col s5 m5">
-                        <select id="category_measure_3" name="category_measure_3" class="validate" >
-                            {% if project.project_categories[2].category_measure %}
-                                <option value="{{project.project_categories[2].category_measure}}" selected>{{project.project_categories[2].category_measure}}</option>
-                                <option value="per unit">per unit</option>
-                                <option value="per hour">per hour</option>
-                                <option value="per day">per day</option>
-                            {% else %}
-                                <option value="" class="grey-text" disabled selected>Measured in</option>
-                                <option value="per unit">per unit</option>
-                                <option value="per hour">per hour</option>
-                                <option value="per day">per day</option>
-                            {% endif %}
-                        </select>   
-                    </div>
-                </div>
-                <!-- category 4 -->
-                <div class="row">
-                    <div class="input-field col s5 m5">
-                        <input id="category_name_4" name="category_name_4" type="text" 
-                            value="{{project.project_categories[3].category_name}}"   minlength="5" maxlength="50"  class="validate" >
-                        <label for="category_name_4">Category Name</label>
-                    </div>
-                    <div class="input-field col s5 m5">
-                        <select id="category_measure_4" name="category_measure_4" class="validate" >
-                            {% if project.project_categories[3].category_measure %}
-                                <option value="{{project.project_categories[3].category_measure}}" selected>{{project.project_categories[3].category_measure}}</option>
-                                <option value="per unit">per unit</option>
-                                <option value="per hour">per hour</option>
-                                <option value="per day">per day</option>
-                            {% else %}
-                                <option value="" class="grey-text" disabled selected>Measured in</option>
-                                <option value="per unit">per unit</option>
-                                <option value="per hour">per hour</option>
-                                <option value="per day">per day</option>
-                            {% endif %}
-                        </select>   
-                    </div>
-                </div>
-               
+
+                {% endfor %}
+                <!-- add categories  -->
+                <div class="btn" id="add-category">ADD CATEGORY</div>  
+
                 <!-- buttons -->
                 <div class="row center-align">
                     <!-- cancel button -->
@@ -137,4 +74,16 @@
         </form>
     </div>
 
-  {% endblock %}
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(`.delete-category`).each(function(){
+              $(this).click(function(){
+                $(this).closest(".category").remove()
+             })
+        
+        })
+    </script>
+{% endblock %}
+
