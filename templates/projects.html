@@ -31,9 +31,9 @@
                     <div class="row teal">
                         <h5>Categories</h5>
                         {% for category in project.project_categories %}
-                            {% if category.category_name %}
+                            {% if category.name %}
                                 <div class="col s12 m12">    
-                                    {{ category.category_name }} <em class="white-text">measured</em> {{ category.category_measure }}
+                                    {{ category.name }} <em class="white-text">measured</em> {{ category.measure }}
                                 </div>
                             {% endif %}
                         {% endfor %}
