@@ -1,5 +1,3 @@
-
-
 $(document).ready(function(){
     let categoryCount = 1
     
@@ -23,7 +21,7 @@ $(document).ready(function(){
                     </select>   
                 </div>
                 <div class="col s2 m2">
-                    <div class="btn"><i class="fas fa-times"></i>
+                    <div class="btn red"><i class="fas fa-times"></i>
                     </div>
                 </div>
             </div>
