@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="col s12 m8 offset-m2">
+        <div class="card-panel">
+            <h3 class="center-align">
+                {{ username.capitalize() }}'s Budgets
+            </h3>
+        </div>
+    </div>
+</div>
+
+<ul class="collapsible">
+    {% for project in projects %}
+    <li>
+        <div class="collapsible-header padding-min">
+            <div class="col s3">
+                <i class="fas fa-caret-down"></i>
+                <a href="{{ url_for('delete_project', project_id=project._id) }}" class="btn-small red lighten-3">Delete</a>
+                <a href="{{ url_for('edit_project', project_id=project._id) }}" class="btn-small teal lighten-2">Edit</a>
+    
+            </div>
+            <div class="col s9">
+                <strong>{{ project.project_name.upper() }} ({{ project.project_currency.upper() }})</strong>
+            </div>
+        </div>
+        <div class="collapsible-body">
+           
+            <p>Project Start date: {{ project.project_start_date }}</p>
+            <div class="row orange padding-min">
+                
+                {% for category in project.project_categories %}
+                    {% if category.name %}
+                        <div class="col s12 m12">    
+                            <strong>{{ category.name }} </strong>
+                        </div>
+
+                        {% for budget in budgets %}
+                            {% for item in budget.budget_items %}
+                                {% if item.project_category|lower == category.name|lower %}
+                                    <div class="row padding-min">
+                                        <div class="col s8 m8">  
+                                                {{ item.name }} ({{ item.description }})
+                                        </div>
+                                        <div class="col s4 m4">  
+                                            {{ project.project_currency|upper }} 
+                                            {{  (item.unit_price|float * item.unit_volume|float) | currencyFormat  }}                                        
+                                        </div>
+                                    </div>
+                                 {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+    </li>
+    {% endfor %}
+</ul>
+
+
+
+
+
+{% endblock %}

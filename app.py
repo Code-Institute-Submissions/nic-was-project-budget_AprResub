@@ -196,7 +196,7 @@ def budgets():
         return redirect(url_for("login"))
 
     projects = mongo.db.projects.find()
-    budgets = mongo.db.budgets.find({"user_email": session["user"]})
+    budgets = list(mongo.db.budgets.find({"user_email": session["user"]}))
     user = mongo.db.users.find_one({"user_email": session["user"]})
 
     return render_template("budgets.html", projects=projects, username=user["first_name"], budgets=budgets)
