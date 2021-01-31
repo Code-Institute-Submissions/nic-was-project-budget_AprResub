@@ -4,47 +4,43 @@
 <div class="row">
     <div class="col s12 m8 offset-m2">
         <div class="card-panel">
-            <h3 class="center-align">
-                {{ username.capitalize() }}'s Dashboard
-            </h3>
+            <h4 class="center-align">
+                {{ username.capitalize() }}'s Projects
+            </h4>
         </div>
     </div>
 </div>
 
 <ul class="collapsible">
     {% for project in projects %}
-    <li>
-        <div class="collapsible-header">
-            <div class="col s3">
-                <i class="fas fa-caret-down"></i>
-                {% if session.user|lower == project.created_by|lower %}
-                    <a href="{{ url_for('delete_project', project_id=project._id) }}" class="btn-small red lighten-3">Delete</a>
-                    <a href="{{ url_for('edit_project', project_id=project._id) }}" class="btn-small teal lighten-2">Edit</a>
-                {% endif %}
-            </div>
-            <div class="col s9">
-                <strong>{{ project.project_name.upper() }} ({{ project.project_currency.upper() }})</strong>
-            </div>
-        </div>
-        <div class="collapsible-body">
-           
-            <p>Project Start date: {{ project.project_start_date }}</p>
-            <div class="row teal">
-                <h5>Categories</h5>
-                {% for category in project.project_categories %}
-                    {% if category.category_name %}
-                        <div class="col s12 m12">    
-                            {{ category.category_name }} <em class="white-text">measured</em> {{ category.category_measure }}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-        </div>
-    </li>
+        {% if session.user|lower == project.created_by|lower %}
+            <li>
+                <div class="collapsible-header">
+                    <div class="col s3">
+                        <i class="fas fa-caret-down"></i>
+                        <a href="{{ url_for('delete_project', project_id=project._id) }}" class="btn-small red lighten-3">Delete</a>
+                        <a href="{{ url_for('edit_project', project_id=project._id) }}" class="btn-small teal lighten-2">Edit</a>
+                    </div>
+                    <div class="col s9">
+                        <strong>{{ project.project_name.upper() }} ({{ project.project_currency.upper() }})</strong>
+                    </div>
+                </div>
+                <div class="collapsible-body">
+                
+                    <p>Project Start date: {{ project.project_start_date }}</p>
+                    <div class="row teal">
+                        <h5>Categories</h5>
+                        {% for category in project.project_categories %}
+                            {% if category.category_name %}
+                                <div class="col s12 m12">    
+                                    {{ category.category_name }} <em class="white-text">measured</em> {{ category.category_measure }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                </div>
+            </li>
+        {% endif %}
     {% endfor %}
   </ul>
-
-
-
-
 
 {% endblock %}
