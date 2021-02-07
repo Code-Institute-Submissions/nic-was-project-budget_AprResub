@@ -3,11 +3,13 @@
 
 <div class="row">
     <div class="col s12 m8 offset-m2">
-        <div class="card-panel">
+        <div class="card-panel padding-forms">
             <h4 class="center-align">
                 {{ username.capitalize() }}'s Projects
             </h4>
+
         </div>
+
     </div>
 </div>
 
@@ -15,13 +17,17 @@
     {% for project in projects %}
         {% if session.user|lower == project.created_by|lower %}
             <li>
-                <div class="collapsible-header">
-                    <div class="col s3">
+                <div class="collapsible-header padding-forms">
+                    <div class="col s2">
                         <i class="fas fa-caret-down"></i>
-                        <a href="{{ url_for('delete_project', project_id=project._id) }}" class="btn-small red lighten-3">Delete</a>
-                        <a href="{{ url_for('edit_project', project_id=project._id) }}" class="btn-small teal lighten-2">Edit</a>
+                        <a href="{{ url_for('delete_project', project_id=project._id) }}" class="btn-small white delete-icon">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                        <a href="{{ url_for('edit_project', project_id=project._id) }}" class="btn-small white edit-icon">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
                     </div>
-                    <div class="col s9">
+                    <div class="col s9">    
                         <strong>{{ project.project_name.upper() }} ({{ project.project_currency.upper() }})</strong>
                     </div>
                 </div>
@@ -42,5 +48,8 @@
         {% endif %}
     {% endfor %}
   </ul>
+
+  <div id="add-new-project"  class="btn centre-align"><a href="{{ url_for('create_project') }}">Add New Project</a></div>
+
 
 {% endblock %}
