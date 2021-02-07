@@ -1,13 +1,16 @@
+
+
 $(document).ready(function(){
-    let categoryCount = 1
-    
+    let categoryCount = 10
+
     $("#add-category").click(function(){
+
         categoryCount++
 
 
         $("#categories").append(`
         
-            <div class="row category" id="${categoryCount}category">
+            <div class="row category padding-forms" id="${categoryCount}category">
                 <div class="input-field col s5 m5">
                     <input name="${categoryCount}category" type="text" 
                         minlength="5" maxlength="50"  class="validate">
@@ -28,6 +31,7 @@ $(document).ready(function(){
 
         `)
  
+
         // dropdown
         $(`select`).formSelect()
 
@@ -39,6 +43,7 @@ $(document).ready(function(){
 
 
   });
+
 
 
 

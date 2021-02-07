@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
     {% block styles %}
     {% endblock %}
+ 
     <title>Project Budget</title>
 
 </head>
@@ -27,7 +28,6 @@
                     <li><a href="#">Home</a></li>
                     {% if session.user %}
                         <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-                        <li><a href="{{ url_for('create_project') }}">Create a project</a></li>
                         <li><a href="{{ url_for('projects') }}">Projects</a></li>
                         <li><a href="{{ url_for('budgets') }}">Budgets</a></li>
                         <li><a href="#">Actuals</a></li>
@@ -45,7 +45,6 @@
             <li><a href="#">Home</a></li>
             {% if session.user %}
                 <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-                <li><a href="{{ url_for('create_project') }}">Create a project</a></li>
                 <li><a href="{{ url_for('projects') }}">Projects</a></li>
                 <li><a href="{{ url_for('budgets') }}">Budgets</a></li>
                 <li><a href="#">Actuals</a></li>
@@ -86,7 +85,6 @@
     
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script src="{{ url_for('static', filename='js/categories.js') }}"></script>
-
 
     {% block scripts %}
     {% endblock %}        

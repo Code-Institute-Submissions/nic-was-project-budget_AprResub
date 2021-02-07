@@ -6,7 +6,7 @@
 
     <div class="row">
         <form class="col s12 m10 offset-m1" method="POST" action="{{ url_for('edit_project', project_id = project._id) }}">
-            <div class="card-panel white">
+            <div class="card-panel white padding-forms">
                 <!-- project name -->
                 <div class="row">
                     <div class="input-field col s12">
@@ -32,34 +32,42 @@
                     </div>
                 </div>
 
-                <!-- print existing categories -->
+                <!-- print existing categories JS-->
                 {% for category in project.project_categories %}
-                    <div class="row category">
-                        <div class="input-field col s5 m5">
-                            <input id="category_name_{{loop.index}}" name="category_name_{{loop.index}}" type="text" 
-                                value="{{category.name}}" minlength="5" maxlength="50"  class="validate" required>
-                            <label for="category_name_{{loop.index}}">Category Name</label>
-                        </div>
-                        <div class="input-field col s5 m5">
-                            <select id="category_measure_{{loop.index}}" name="category_measure_{{loop.index}}" class="validate" required>
-                                
-                                    <option value="{{category.measure}}" selected disabled>{{category.measure}}</option>
+                    <div class="row category padding-forms" id="exiting-categories">
+                        <div class="row category" id="{{loop.index}}category">
+                            <div class="input-field col s5 m5">
+                                <input name="{{loop.index}}category" name="{{loop.index}}category" type="text" 
+                                    value="{{category.name}}" minlength="5" maxlength="50"  class="validate">
+                                <label for="{{loop.index}}category">Category Name</label>
+                            </div>
+                            <div class="input-field col s5 m5">
+                                <select name="{{loop.index}}category" class="validate">
+                                    <option value="{{category.measure}}" selected class="greyed-out">{{category.measure}}</option>
                                     <option value="per unit">per unit</option>
                                     <option value="per hour">per hour</option>
                                     <option value="per day">per day</option>
-                                
-                            </select>   
-                        </div>
-                        <div class="col s2 m2">
-                            <div class="btn red delete-category"><i class="fas fa-times"></i>
+                                </select>   
+                            </div>
+                            <div class="col s2 m2">
+                                {% if loop.index == 1 %}
+                                    <div  class="input-field col">Required</div>
+                                {% else %}
+                                    <div class="btn red delete-category"><i class="fas fa-times"></i>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
 
                 {% endfor %}
                 <!-- add categories  -->
-                <div class="btn" id="add-category">ADD CATEGORY</div>  
-
+                <div class="row category" id="categories">
+                </div>
+                              
+                <div class="btn" id="add-category">ADD CATEGORY</div>    
+               
+ 
                 <!-- buttons -->
                 <div class="row center-align">
                     <!-- cancel button -->
@@ -67,7 +75,7 @@
                     <!-- edit button -->
                     <button class="teal btn-large" type="submit">Edit
                         <i class="fas fa-sign-in-alt right"></i>
-                      </button>
+                    </button>
                 </div>
             </div>
         </form>
@@ -83,6 +91,6 @@
              })
         
         })
-    </script>
-{% endblock %}
+    </script> 
 
+{% endblock %}

@@ -22,4 +22,34 @@ body {
 
 .padding-min {
     padding: 2px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+}
+
+.padding-forms {
+    padding-left: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.edit-icon {
+    color: teal;
+    margin: 0px;
+}
+
+.delete-icon {
+    color: rgba(224, 0, 0, 0.822);
+    margin: 0px;
+}
+
+.budget-items {
+    padding-left: 15px;
+}
+
+#add-new-project a {
+    color: white;
+}
+
+.greyed-out {
+    color: deeppink;
 }
