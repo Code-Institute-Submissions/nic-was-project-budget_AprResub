@@ -24,6 +24,11 @@ def currencyFormat(value):
     return "{:,.2f}".format(value)
 
 @app.route("/")
+@app.route("/home")
+def home():
+    return render_template("home.html")
+
+
 @app.route("/projects")
 def projects():
 
@@ -75,7 +80,7 @@ def login():
                     session["user"] = request.form.get("email").lower()
                     flash("Welcome, {}!".format(
                         existing_email["first_name"].capitalize()))
-                    return redirect(url_for("dashboard", username=session["user"]))
+                    return redirect(url_for("budgets", username=session["user"]))
             else:
                 # invalid password match
                 flash("Incorrect login details")
@@ -86,21 +91,6 @@ def login():
 
     return render_template("login.html")
        
-
-@app.route("/dashboard", methods=["GET", "POST"])
-def dashboard():
-
-    if not session.get("user", None):
-        return redirect(url_for("login"))
-
-    user = mongo.db.users.find_one({"user_email": session["user"]})
-    projects = mongo.db.projects.find({"created_by": user["user_email"]})
-    
-    if session["user"]:
-        return render_template("dashboard.html", username=user["first_name"], projects=projects)
-
-    return redirect(url_for("login"))
-
 
 @app.route("/logout")
 def logout():
@@ -198,33 +188,87 @@ def budgets():
     if not session.get("user", None):
         return redirect(url_for("login"))
 
-    projects = mongo.db.projects.find()
-    budgets = list(mongo.db.budgets.find({"user_email": session["user"]}))
     user = mongo.db.users.find_one({"user_email": session["user"]})
 
-    # Calculating the total budget values per project category for display to user 
-    budget_totals = []
+    projects = []
 
-    for budget in budgets:
-        totals_by_category = {}
-       
-        for item in budget["budget_items"]:
-           
-            if item["project_category"].lower() in totals_by_category.keys():
-                totals_by_category[item["project_category"].lower()] += float(item["amount"])
-            else:
-                totals_by_category[item["project_category"].lower()] = float(item["amount"]) 
-       
-        budget_totals.append({"project" : budget["project_name"],  "total_budget" : totals_by_category})   
+    # Loop over each "project name"
+    for project in mongo.db.projects.find({"created_by": session["user"]}):
+        data = {
+            "_id" : project["_id"],
+            "name" : project["project_name"],
+            "currency" : project["project_currency"],
+            "budgets" : []}
+        
+        # Loop over each budget that shares "project name"
+        for budget_database in mongo.db.budgets.find({"user_email": session["user"], "project_name" : data["name"]}):
+            
+            budget = {
+                "_id": budget_database["_id"],
+                "name" : budget_database["budget_name"],
+                "categories" : {}
+            }
 
-    return render_template("budgets.html", projects=projects, username=user["first_name"], 
-        budgets=budgets, budget_totals=budget_totals)
+            for i in budget_database["budget_items"]:
+                category = i["project_category"].lower()
+                if not budget["categories"].get(category, None):
+                    budget["categories"][category] = {"items": [i], "total": float(i["amount"])}
+                else:
+                    
+                    budget["categories"][category]["items"].append(i)
+                    budget["categories"][category]["total"] += float(i["amount"])
+                    
+            data["budgets"].append(budget)
+
+        projects.append(data)
+    return render_template("budgets.html", projects=projects, user=user)
+
+
+
+@app.route("/add_budget/<project_id>", methods=["GET", "POST"])
+def add_budget(project_id):
+    project = mongo.db.projects.find_one({"_id": ObjectId(project_id), "created_by": session["user"]})
+    
+    if request.method == "POST":
+
+        budget_items = []
+       
+        for key in request.form.keys():
+            print("KEYS: ", key)            
+            if "budget_item" in key:
+                print(request.form.getlist(key))
+                name, details, amount, category = request.form.getlist(key)
+                if not name or not details or not amount or not category:
+                    continue
+                budget_items.append({"name":name, "details":details, 
+                    "amount":amount, "project_category":category })
+
+        submit = {
+            "user_email": session["user"],
+            "project_name": project["project_name"],
+            "budget_name": request.form.get("budget_name"),
+            "budget_items": budget_items
+    
+        }
+
+        mongo.db.budgets.insert_one(submit)
+        flash("Budget added successfully!")
+        return redirect(url_for("budgets"))
+
+    return render_template("add_budget.html", project=project)
+
+
+@app.route("/delete_budget/<budget_id>")
+def delete_budget(budget_id):
+    if not session.get("user", None):
+        return redirect(url_for("login"))
+
+    mongo.db.budgets.remove({"_id": ObjectId(budget_id)})
+    flash("Budget deleted successfully!")
+    return redirect(url_for("budgets"))
 
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
             debug=True)
-
-
-
