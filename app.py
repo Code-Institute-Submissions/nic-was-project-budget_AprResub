@@ -157,7 +157,9 @@ def edit_project(project_id):
         project_categories = []
        
         for key in request.form.keys():
+            print("KEYS: ", key)            
             if "category" in key:
+                print(request.form.getlist(key))
                 name, measure = request.form.getlist(key)
                 if not name or not measure:
                     continue
@@ -172,8 +174,9 @@ def edit_project(project_id):
     
         }
 
-        mongo.db.projects.update({"_id": ObjectId(project_id)}, submit)
+        mongo.db.projects.update({"_id": ObjectId(project_id)},  submit)
         flash("Project updated successfully!")
+        return redirect(url_for("projects"))
 
     project = mongo.db.projects.find_one({"_id": ObjectId(project_id)})
     return render_template("edit_project.html", project=project)
@@ -199,7 +202,23 @@ def budgets():
     budgets = list(mongo.db.budgets.find({"user_email": session["user"]}))
     user = mongo.db.users.find_one({"user_email": session["user"]})
 
-    return render_template("budgets.html", projects=projects, username=user["first_name"], budgets=budgets)
+    # Calculating the total budget values per project category for display to user 
+    budget_totals = []
+
+    for budget in budgets:
+        totals_by_category = {}
+       
+        for item in budget["budget_items"]:
+           
+            if item["project_category"].lower() in totals_by_category.keys():
+                totals_by_category[item["project_category"].lower()] += float(item["amount"])
+            else:
+                totals_by_category[item["project_category"].lower()] = float(item["amount"]) 
+       
+        budget_totals.append({"project" : budget["project_name"],  "total_budget" : totals_by_category})   
+
+    return render_template("budgets.html", projects=projects, username=user["first_name"], 
+        budgets=budgets, budget_totals=budget_totals)
 
 
 if __name__ == "__main__":
