@@ -33,8 +33,8 @@
                 </div>
 
                 <!-- print existing categories JS-->
-                {% for category in project.project_categories %}
-                    <div class="row category padding-forms" id="exiting-categories">
+                <div class="row category padding-forms" id="exiting-categories">
+                {% for category in project.project_categories %} 
                         <div class="row category" id="{{loop.index}}category">
                             <div class="input-field col s5 m5">
                                 <input name="{{loop.index}}category" name="{{loop.index}}category" type="text" 
@@ -58,9 +58,9 @@
                                 {% endif %}
                             </div>
                         </div>
-                    </div>
-
-                {% endfor %}
+                        
+                        {% endfor %}
+                </div>
                 <!-- add categories  -->
                 <div class="row category" id="categories">
                 </div>

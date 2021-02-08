@@ -2,14 +2,13 @@
 {% block content %}
 
 <div class="row">
-    <div class="col s12 m8 offset-m2">
-        <div class="card-panel padding-forms">
-            <h4 class="center-align">
-                {{ username.capitalize() }}'s Projects
-            </h4>
-
+    <div class="col s12 m12">
+    <div class="card white darken-1">
+        <div class="card-content teal-text center-align">
+        <span class="card-title"><strong>MY PROJECTS</strong></span>
+        <p>Add, edit or remove projects here</p>
         </div>
-
+    </div>
     </div>
 </div>
 
@@ -17,7 +16,10 @@
     {% for project in projects %}
         {% if session.user|lower == project.created_by|lower %}
             <li>
-                <div class="collapsible-header padding-forms">
+                <div class="collapsible-header my-row">
+                    <div class="col s9">    
+                        {{ project.project_name.title() }} ({{ project.project_currency.upper() }})
+                    </div>
                     <div class="col s2">
                         <i class="fas fa-caret-down"></i>
                         <a href="{{ url_for('delete_project', project_id=project._id) }}" class="btn-small white delete-icon">
@@ -27,15 +29,13 @@
                             <i class="fas fa-pencil-alt"></i>
                         </a>
                     </div>
-                    <div class="col s9">    
-                        <strong>{{ project.project_name.upper() }} ({{ project.project_currency.upper() }})</strong>
-                    </div>
+                    
                 </div>
                 <div class="collapsible-body">
                 
                     <p>Project Start date: {{ project.project_start_date }}</p>
                     <div class="row teal">
-                        <h5>Categories</h5>
+                        <strong>Categories</strong>
                         {% for category in project.project_categories %}
                             {% if category.name %}
                                 <div class="col s12 m12">    
@@ -50,6 +50,5 @@
   </ul>
 
   <div id="add-new-project"  class="btn centre-align"><a href="{{ url_for('create_project') }}">Add New Project</a></div>
-
 
 {% endblock %}
