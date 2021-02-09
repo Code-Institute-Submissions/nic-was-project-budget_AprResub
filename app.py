@@ -113,7 +113,7 @@ def create_project():
         return redirect(url_for("login"))
 
     if request.method == "POST":
-
+# create categories placeholder
         project_categories = []
        
         for key in request.form.keys():
@@ -122,7 +122,7 @@ def create_project():
                 if not name or not measure:
                     continue
                 project_categories.append({"name":name, "measure":measure})
-
+# create full project document to be sent to db
         project = {
             "created_by": session["user"],
             "project_name": request.form.get("project_name"),
@@ -133,6 +133,7 @@ def create_project():
         
         mongo.db.projects.insert_one(project)
 
+# flash message
         flash("Project added successfully!")
         return redirect(url_for("projects"))
     return render_template("create_projects.html")
@@ -145,18 +146,16 @@ def edit_project(project_id):
         return redirect(url_for("login"))
 
     if request.method == "POST":
-
+# create categories placeholder
         project_categories = []
        
         for key in request.form.keys():
-            print("KEYS: ", key)            
             if "category" in key:
-                print(request.form.getlist(key))
                 name, measure = request.form.getlist(key)
                 if not name or not measure:
                     continue
                 project_categories.append({"name":name, "measure":measure})
-
+# create full project document to be sent to db
         submit = {
             "created_by": session["user"],
             "project_name": request.form.get("project_name"),
@@ -165,7 +164,7 @@ def edit_project(project_id):
             "project_categories": project_categories
     
         }
-
+# flash message
         mongo.db.projects.update({"_id": ObjectId(project_id)},  submit)
         flash("Project updated successfully!")
         return redirect(url_for("projects"))
@@ -191,7 +190,7 @@ def budgets():
         return redirect(url_for("login"))
 
     user = mongo.db.users.find_one({"user_email": session["user"]})
-
+# create projects placeholder
     projects = []
 
     # Loop over each "project name"
@@ -211,13 +210,12 @@ def budgets():
                 "name" : budget_database["budget_name"],
                 "categories" : {}
             }
-
+            # Loop over each item in "budet_items" 
             for i in budget_database["budget_items"]:
                 category = i["project_category"].lower()
                 if not budget["categories"].get(category, None):
                     budget["categories"][category] = {"items": [i], "total": float(i["amount"])}
                 else:
-                    
                     budget["categories"][category]["items"].append(i)
                     budget["categories"][category]["total"] += float(i["amount"])
                     
@@ -234,7 +232,7 @@ def add_budget(project_id):
         {"_id": ObjectId(project_id), "created_by": session["user"]})
     
     if request.method == "POST":
-
+# create budget_items placeholder
         budget_items = []
        
         for key in request.form.keys():
@@ -246,14 +244,14 @@ def add_budget(project_id):
                     continue
                 budget_items.append({"name":name, "details":details, 
                     "amount":amount, "project_category":category })
-
+# create full budget document to submit to db
         submit = {
             "user_email": session["user"],
             "project_name": project["project_name"],
             "budget_name": request.form.get("budget_name"),
             "budget_items": budget_items
         }
-
+# flash message
         mongo.db.budgets.insert_one(submit)
         flash("Budget added successfully!")
         return redirect(url_for("budgets"))
