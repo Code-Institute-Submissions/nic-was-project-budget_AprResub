@@ -63,6 +63,8 @@ def register():
         # put new user email address into session cookie
         session["user"] = request.form.get("email").lower()
         flash("You have registered successfully!")
+        return redirect(url_for("login"))
+
     return render_template("register.html")
 
 
