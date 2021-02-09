@@ -203,7 +203,8 @@ def budgets():
             "budgets" : []}
         
         # Loop over each budget that shares "project name"
-        for budget_database in mongo.db.budgets.find({"user_email": session["user"], "project_name" : data["name"]}):
+        for budget_database in mongo.db.budgets.find(
+            {"user_email": session["user"], "project_name" : data["name"]}):
             
             budget = {
                 "_id": budget_database["_id"],
@@ -229,7 +230,8 @@ def budgets():
 
 @app.route("/add_budget/<project_id>", methods=["GET", "POST"])
 def add_budget(project_id):
-    project = mongo.db.projects.find_one({"_id": ObjectId(project_id), "created_by": session["user"]})
+    project = mongo.db.projects.find_one(
+        {"_id": ObjectId(project_id), "created_by": session["user"]})
     
     if request.method == "POST":
 
@@ -250,7 +252,6 @@ def add_budget(project_id):
             "project_name": project["project_name"],
             "budget_name": request.form.get("budget_name"),
             "budget_items": budget_items
-    
         }
 
         mongo.db.budgets.insert_one(submit)
