@@ -84,8 +84,8 @@ def login():
                 session["user"] = request.form.get("email").lower()
                 flash("Welcome, {}!".format(
                       existing_email["first_name"].capitalize()))
-            return redirect(url_for("budgets",
-                            username=session["user"]))
+                return redirect(url_for("budgets",
+                                username=session["user"]))
             else:
                 # invalid password match
                 flash("Incorrect login details")
@@ -218,12 +218,11 @@ def budgets():
             for i in budget_database["budget_items"]:
                 category = i["project_category"].lower()
                 if not budget["categories"].get(category, None):
-                    budget["categories"][category] =
-                    {"items": [i], "total": float(i["amount"])}
+                    item = {"items": [i], "total": float(i["amount"])}
+                    budget["categories"][category] = item
                 else:
                     budget["categories"][category]["items"].append(i)
-                    budget["categories"][category]["total"]
-                    += float(i["amount"])
+                    budget["categories"][category]["total"] += float(i["amount"])
 
             data["budgets"].append(budget)
 
