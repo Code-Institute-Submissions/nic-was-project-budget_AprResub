@@ -30,11 +30,18 @@ The purpose of this site is to allow a user to log in, create budgets for projec
 
 
 ## Testing
-- Clicked on all links to make sure they go to the correct path, where the did not, I updated the paths accordingly.
+- Tested registration of a new account by typing in name, lastname and email address. Checked that the new user was added to the MongoDB database.
+Clicked on all links to make sure they go to the correct path, where the did not, I updated the paths accordingly.
 - Tested pep8 compliance for python code on http://pep8online.com/checkresult, corrected all errors and warnings.
 
 ## Deployment
-Auto deploy to Heroku through github updates.
+Create a new Heroku account.
+Create a New App in Heroku with the name project-budget-x in region Europe.
+Select Python as the Framework.
+Link to GitHub repo nic-was/project-budget.
+Add config vars in the settings tab for the project (IP, MONGO_DB, Mongo_URI, PORT, SECRET_KEY, KEY)
+In the Deploy tab, choose GitHub as the Deployment method.
+Enable Auto deploy to Heroku through github updates.
  
 ### Acknowledgements
 - Thank you Glen, Cheryl and Neville for helping with a lot of user testing.
