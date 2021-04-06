@@ -1,98 +1,88 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <div class="row">
-        <div class="col s12 m12">
+<div class="row">
+    <div class="col s12 m12">
         <div class="card white darken-1">
             <div class="card-content teal-text center-align">
-            <span class="card-title"><strong>CREATE A NEW PROJECT</strong></span>
-            <p>Fill in all the items in the form below and click Submit when ready to add a new project. 
-                You can add as many project categories as you like, but have to have at least one. 
-            </p>
-            <p>An example of some categories could include <em>"Raw Materials"</em>, 
-                <em>"Labour"</em>, <em>"Tools"</em></p>    
+                <span class="card-title"><strong>CREATE A NEW PROJECT</strong></span>
+                <p>Fill in all the items in the form below and click Submit when ready to add a new project.
+                    You can add as many project categories as you like, but have to have at least one.
+                </p>
+                <p>An example of some categories could include <em>"Raw Materials"</em>,
+                    <em>"Labour"</em>, <em>"Tools"</em>
+                </p>
             </div>
         </div>
-        </div>
     </div>
+</div>
 
 
-    <div class="row">
-        <form id="new-project" class="col s12 m10 offset-m1" method="POST" action="{{ url_for('create_project') }}" >
-            <div class="card-panel white">
-                <!-- project name -->
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="project_name" name="project_name" type="text" 
-                            minlength="5" maxlength="50"  class="validate" required>
-                        <label for="project_name">Project Name</label>
-                    </div>
-                </div>
-                <!-- currency -->
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="project_currency" name="project_currency" type="text" 
-                            minlength="3" maxlength="3" class="validate" 
-                            pattern="^[EURZARGBPUSDJPYeurzargbpusdjpy]{3,3}$" required>
-                        <label for="project_currency">Currency</label>
-                    </div>
-                </div>
-                <!-- date picker -->
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="project_start_date" name="project_start_date" type="text" 
-                            class="datepicker validate" required>
-                        <label for="project_start_date">Start Date</label>
-                    </div>
-                </div>
-                <!-- categories -->
-              
-                <div id="categories">   
-                    <!-- at least one category should be entered  -->
-                    <div class="row category" id="0category">
-                        <div class="input-field col s5 m5">
-                            <input name="0category" type="text" 
-                                minlength="5" maxlength="50"  class="validate" required>
-                            <label for="0category">Category Name</label>
-                        </div>
-                        <div class="input-field col s5 m5">
-                            <select name="0category" class="validate" required>
-                                <option value="per unit" selected>per unit</option>
-                                <option value="per hour">per hour</option>
-                                <option value="per day">per day</option>
-                            </select>   
-                        </div>
-                        <div  class="input-field col">Required</div>
-                    </div>
-                </div>
-
-                <!--this is where additional categories are added  -->
-                              
-                <div class="btn" id="add-category">ADD CATEGORY</div>    
-               
-                <!-- submit button -->
-                <div class="row center-align">
-                    <button class="teal btn-large" type="submit">Submit
-                        <i class="fas fa-sign-in-alt right"></i>
-                    </button>
+<div class="row">
+    <form id="new-project" class="col s12 m10 offset-m1" method="POST" action="{{ url_for('create_project') }}">
+        <div class="card-panel white">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="project_name" name="project_name" type="text" minlength="5" maxlength="50"
+                        class="validate" required>
+                    <label for="project_name">Project Name</label>
                 </div>
             </div>
-        </form>
-    </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="project_currency" name="project_currency" type="text" minlength="3" maxlength="3"
+                        class="validate" pattern="^[EURZARGBPUSDJPYeurzargbpusdjpy]{3,3}$" required>
+                    <label for="project_currency">Currency</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="project_start_date" name="project_start_date" type="text" class="datepicker validate"
+                        required>
+                    <label for="project_start_date">Start Date</label>
+                </div>
+            </div>
 
+            <div id="categories">
+                <div class="row category" id="0category">
+                    <div class="input-field col s5 m5">
+                        <input name="0category" type="text" minlength="5" maxlength="50" class="validate" required>
+                        <label for="0category">Category Name</label>
+                    </div>
+                    <div class="input-field col s5 m5">
+                        <select name="0category" class="validate" required>
+                            <option value="per unit" selected>per unit</option>
+                            <option value="per hour">per hour</option>
+                            <option value="per day">per day</option>
+                        </select>
+                    </div>
+                    <div class="input-field col">Required</div>
+                </div>
+            </div>
+
+            <div class="btn" id="add-category">ADD CATEGORY</div>
+
+            <div class="row center-align">
+                <button class="teal btn-large" type="submit">Submit
+                    <i class="fas fa-sign-in-alt right"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 
 {% endblock %}
 
 
 
 {% block scripts %}
-    <script>
-        $(`.delete-category`).each(function(){
-              $(this).click(function(){
-                $(this).closest(".category").remove()
-             })
-        
+<script>
+    $(`.delete-category`).each(function () {
+        $(this).click(function () {
+            $(this).closest(".category").remove()
         })
-    </script> 
+
+    })
+</script>
 
 {% endblock %}

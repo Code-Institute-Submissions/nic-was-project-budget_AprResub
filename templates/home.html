@@ -1,80 +1,78 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- Overview -->
-    <div class="row">
-        <div class="col s12 m12">
+<div class="row">
+    <div class="col s12 m12">
         <div class="card white darken-1">
             <div class="card-content teal-text center-align">
-            <span class="card-title"><STRONG>  WELCOME TO PROJECT BUDGET!</STRONG></span>
-            
-            <p>Follow the easy steps below to start recording your projects and the budgets you're setting asside to complete them!
-            </p>
+                <span class="card-title"><STRONG> WELCOME TO PROJECT BUDGET!</STRONG></span>
+
+                <p>Follow the easy steps below to start recording your projects and the budgets you're setting asside to
+                    complete them!
+                </p>
             </div>
-           
-        </div>
+
         </div>
     </div>
+</div>
 
-
-<!-- step 1 -->
-    <div class="row">
-        <div class="col s12 m3">
+<div class="row">
+    <div class="col s12 m3">
         <div class="card teal darken-1">
             <div class="card-content white-text center-align">
-            <span class="card-title">STEP 1: Login/Register</span>
-            
-            <p>Click on either the Register or Login links below to create an account or to login to your existing account 
-            </p>
+                <span class="card-title">STEP 1: Login/Register</span>
+
+                <p>Click on either the Register or Login links below to create an account or to login to your existing
+                    account
+                </p>
             </div>
             <div class="card-action">
                 <a href="{{ url_for ('register')}}">Register</a>
                 <a href="{{ url_for ('login')}}">Login</a>
             </div>
         </div>
-        </div>
-
-    <!-- step 2 -->
-        
-        <div class="col s12 m6">
-            <div class="card white darken-1 center-align">
-                <div class="card-content teal-text">
-                    <span class="card-title">STEP 2: Projects</span>
-                    
-                    <div>Add a new project to your account and edit or delete any project you've created</div>br
-                    <div class="card-action">
-                        <ul class="center-align grey-text">
-                            <li>
-                                Include a good descriptive name for your project
-                            </li><hr>
-                            <li>
-                                Indicate what currency you want to track your project in between EUR, ZAR, JPY, USD or GBP 
-                            </li><hr>
-                            <li>
-                                Add categories that you’d like to group your budget items by, for example Raw Materials, Labour, Tools, etc.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-   <!-- step 3 -->
-       
-            <div class="col s12 m3">
-                <div class="card teal darken-1 center-align">
-                    <div class="card-content white-text">
-                        <span class="card-title">STEP 3: Budgets</span>
-                        
-                        <p>Add multiple budgets per project, for example "Phase 1", "Phase 2" and "Phase 3"
-                        </p>
-                        <div class="card-action">
-                            You can only add budgets to an existing project
-                        </div>
-                    </div>
-                </div>
-            </div>
     </div>
+
+    <div class="col s12 m6">
+        <div class="card white darken-1 center-align">
+            <div class="card-content teal-text">
+                <span class="card-title">STEP 2: Projects</span>
+
+                <div>Add a new project to your account and edit or delete any project you've created</div>br
+                <div class="card-action">
+                    <ul class="center-align grey-text">
+                        <li>
+                            Include a good descriptive name for your project
+                        </li>
+                        <hr>
+                        <li>
+                            Indicate what currency you want to track your project in between EUR, ZAR, JPY, USD or GBP
+                        </li>
+                        <hr>
+                        <li>
+                            Add categories that you’d like to group your budget items by, for example Raw Materials,
+                            Labour, Tools, etc.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s12 m3">
+        <div class="card teal darken-1 center-align">
+            <div class="card-content white-text">
+                <span class="card-title">STEP 3: Budgets</span>
+
+                <p>Add multiple budgets per project, for example "Phase 1", "Phase 2" and "Phase 3"
+                </p>
+                <div class="card-action">
+                    You can only add budgets to an existing project
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 {% endblock %}

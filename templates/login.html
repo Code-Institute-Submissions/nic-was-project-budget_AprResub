@@ -1,55 +1,54 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <div class="row">
-        <div class="col s12 m8 offset-m2">
+<div class="row">
+    <div class="col s12 m8 offset-m2">
         <div class="card white darken-1">
             <div class="card-content teal-text center-align">
                 <span class="card-title"><strong>LOGIN</strong></span>
             </div>
         </div>
-        </div>
     </div>
+</div>
 
-
-    <div class="row">
-        <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('login') }}">
-            <div class="card-panel white">
-                <!-- email address -->
-                <div class="row">
-                    <div class="input-field col s12">
-                        <i class="fas fa-at prefix"></i>
-                        <input placeholder="email" id="email" name="email" type="email" class="validate">
-                        <label for="email">email</label>
-                    </div>
-                </div>
-                <!-- password -->
-                <div class="row">
-                    <div class="input-field col s12">
-                        <i class="fas fa-user-lock prefix"></i>
-                        <input placeholder="Password" id="password" name="password" type="password" 
-                            minlength="5" maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" class="validate">
-                        <label for="password">Password</label>
-                    </div>
-                </div>
-                <!-- register button -->
-                <div class="row center-align">
-                    <button class="grey btn-large" type="submit" name="action">Login
-                        <i class="fas fa-sign-in-alt right"></i>
-                      </button>
+<div class="row">
+    <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('login') }}">
+        <div class="card-panel white">
+            <!-- email address -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-at prefix"></i>
+                    <input placeholder="email" id="email" name="email" type="email" class="validate">
+                    <label for="email">email</label>
                 </div>
             </div>
-        </form>
-    </div>
-
-    <div class="row center-align">
-        <div class="col center-align">
-            <p class="center-align">
-                New here?
-                <a href="{{ url_for ('register')}}">Register</a>
-            </p>
+            <!-- password -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-user-lock prefix"></i>
+                    <input placeholder="Password" id="password" name="password" type="password" minlength="5"
+                        maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" class="validate">
+                    <label for="password">Password</label>
+                </div>
+            </div>
+            <!-- register button -->
+            <div class="row center-align">
+                <button class="grey btn-large" type="submit" name="action">Login
+                    <i class="fas fa-sign-in-alt right"></i>
+                </button>
+            </div>
         </div>
+    </form>
+</div>
+
+<div class="row center-align">
+    <div class="col center-align">
+        <p class="center-align">
+            New here?
+            <a href="{{ url_for ('register')}}">Register</a>
+        </p>
     </div>
+</div>
 
 
-  {% endblock %}
+{% endblock %}

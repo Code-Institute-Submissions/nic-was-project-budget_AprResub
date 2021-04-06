@@ -1,92 +1,81 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <div class="row">
-        <div class="col s12 m12">
+<div class="row">
+    <div class="col s12 m12">
         <div class="card white darken-1">
             <div class="card-content teal-text center-align">
-            <span class="card-title"><strong>CREATE A NEW BUDGET FOR {{ project.project_name.upper() }}</strong></span>
-            <p>Enter a new budget name here and add the items that you want to keep track of below that.  
-            </p>
-            <p>Click the submit button when you're happy with your items or click cancel to go back to your budgets page</p>    
+                <span class="card-title"><strong>CREATE A NEW BUDGET FOR {{ project.project_name.upper()
+                        }}</strong></span>
+                <p>Enter a new budget name here and add the items that you want to keep track of below that.
+                </p>
+                <p>Click the submit button when you're happy with your items or click cancel to go back to your budgets
+                    page</p>
             </div>
         </div>
-        </div>
     </div>
+</div>
 
-
-    <div class="row">
-        <form id="new-budget" class="col s12 m12" method="POST" >
-            <div class="card-panel white">
-                <!-- budget name -->
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="budget_name" name="budget_name" type="text" 
-                            minlength="5" maxlength="50"  class="validate" required>
-                        <label for="budget_name">Budget Name</label>
-                    </div>
-                </div>
-                <!-- budget items -->
-            
-                <div id="budget-items"> <span class="card-title teal-text"><strong>BUDGET ITEMS</strong></span>
-                    <!-- at least one item should be entered  -->
-                    <div class="row budget_item" id="0budget_item">
-                        <div class="input-field col s3 m3">
-                            <input name="0budget_item" type="text" 
-                                minlength="5" maxlength="50"  class="validate" required>
-                            <label for="0budget_item">Item Name</label>
-                        </div>
-                        <div class="input-field col s3 m3">
-                            <input name="0budget_item" type="text" 
-                                minlength="5" maxlength="150"  class="validate" required>
-                            <label for="0budget_item">Details</label>
-                        </div>
-                        <div class="input-field col s2 m2">
-                            <input name="0budget_item" type="number"  step=".01"
-                                minlength="5" maxlength="150"  class="validate" required>
-                            <label for="0budget_item">Amount</label>
-                        </div>
-                        <div class="input-field col s3 m3">
-                            <select name="0budget_item" class="validate" required>
-                                {% for category in project.project_categories %}    
-                                    <option value="{{ category.name }}">{{ category.name.title() }}</option>
-                                {% endfor %}
-                            </select>   
-                        </div>
-
-                    </div>
-                </div>
-
-                <!--this is where additional budget items are added  -->
-                              
-                <div class="btn" id="add-budget_item">ADD ITEM</div>    
-               
-                <!-- submit button -->
-                <div class="row center-align">
-                    <button class="teal btn-large" type="submit">Submit
-                        <i class="fas fa-sign-in-alt right"></i>
-                    </button>
-                    <a href="{{url_for('budgets')}}" class="btn-large red text-shadow">Cancel</a>
-                   
+<div class="row">
+    <form id="new-budget" class="col s12 m12" method="POST">
+        <div class="card-panel white">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="budget_name" name="budget_name" type="text" minlength="5" maxlength="50" class="validate"
+                        required>
+                    <label for="budget_name">Budget Name</label>
                 </div>
             </div>
-        </form>
-    </div>
+
+            <div id="budget-items"> <span class="card-title teal-text"><strong>BUDGET ITEMS</strong></span>
+                <div class="row budget_item" id="0budget_item">
+                    <div class="input-field col s3 m3">
+                        <input name="0budget_item" type="text" minlength="5" maxlength="50" class="validate" required>
+                        <label for="0budget_item">Item Name</label>
+                    </div>
+                    <div class="input-field col s3 m3">
+                        <input name="0budget_item" type="text" maxlength="150" class="validate" required>
+                        <label for="0budget_item">Details</label>
+                    </div>
+                    <div class="input-field col s2 m2">
+                        <input name="0budget_item" type="number" step=".01" maxlength="150" class="validate" required>
+                        <label for="0budget_item">Amount</label>
+                    </div>
+                    <div class="input-field col s3 m3">
+                        <select name="0budget_item" class="validate" required>
+                            {% for category in project.project_categories %}
+                            <option value="{{ category.name }}">{{ category.name.title() }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="btn" id="add-budget_item">ADD ITEM</div>
+
+            <div class="row center-align">
+                <button class="teal btn-large" type="submit">Submit
+                    <i class="fas fa-sign-in-alt right"></i>
+                </button>
+                <a href="{{url_for('budgets')}}" class="btn-large red text-shadow">Cancel</a>
+
+            </div>
+        </div>
+    </form>
+</div>
 
 
 {% endblock %}
 
-
-
 {% block scripts %}
-    <script>
-        $(`.delete-budget_item`).each(function(){
-              $(this).click(function(){
-                $(this).closest(".budget_item").remove()
-             })
-        
+<script>
+    $(`.delete-budget_item`).each(function () {
+        $(this).click(function () {
+            $(this).closest(".budget_item").remove()
         })
-    </script> 
-    <script src="{{ url_for('static', filename='js/budget_items.js') }}"></script>
+    })
+</script>
+<script src="{{ url_for('static', filename='js/budget_items.js') }}"></script>
 
 {% endblock %}

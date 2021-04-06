@@ -2,6 +2,10 @@
 Project budget allows a user to create, edit, view and delete projects and to add and delete budgets linked to those projects.
 
 
+## Purpose
+The purpose of this site is to allow a user to log in, create budgets for projects that you might have that require some savings and edit those budgets. The user can only see their data when they are logged in.  
+
+
 ## Features
 ### Existing Features
 
@@ -26,11 +30,12 @@ Project budget allows a user to create, edit, view and delete projects and to ad
 
 
 ## Testing
-- clicked on all links to make sure they go to the correct path, where the did not, I updated the paths accordingly
+- Clicked on all links to make sure they go to the correct path, where the did not, I updated the paths accordingly.
+- Tested pep8 compliance for python code on http://pep8online.com/checkresult, corrected all errors and warnings.
 
 ## Deployment
-Auto deploy to Heroku through github updates
+Auto deploy to Heroku through github updates.
  
 ### Acknowledgements
-- Thank you Glen, Cheryl and Neville for helping with a lot of user testing for me
+- Thank you Glen, Cheryl and Neville for helping with a lot of user testing.
 

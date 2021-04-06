@@ -3,74 +3,72 @@
 
 <div class="row">
     <div class="col s12 m12">
-    <div class="card white darken-1">
-        <div class="card-content teal-text center-align">
-        <span class="card-title"><strong>MY BUDGETS</strong></span>
-        <p>Add or remove budgets for any of your projects</p>
-        <p>You need to have at least one project to be able to add budgets!</p>
+        <div class="card white darken-1">
+            <div class="card-content teal-text center-align">
+                <span class="card-title"><strong>MY BUDGETS</strong></span>
+                <p>Add or remove budgets for any of your projects</p>
+                <p>You need to have at least one project to be able to add budgets!</p>
+            </div>
         </div>
     </div>
-    </div>
 </div>
-
 
 <ul class="collection">
     {% for project in projects %}
     <li class="collection-item project">
-        
+
         <div class="my-row">
             <div>{{ project.name.title() }}</div>
-            <div><a href="{{url_for('add_budget', project_id = project._id)}}" class="btn text-shadow">Add Budget</a></div>
+            <div><a href="{{url_for('add_budget', project_id = project._id)}}" class="btn text-shadow">Add Budget</a>
+            </div>
         </div>
         {% if project.budgets| length > 0 %}
-            <ul class="collapsible">
+        <ul class="collapsible">
             {% for budget in project.budgets %}
-                <li>
-                    <div class="collapsible-header my-row teal-text text-shadow">
-                        
-                        <div>{{ budget.name.title() }}</div>
-                        <div>
-                            <a href="{{ url_for('delete_budget', budget_id=budget._id) }}" class="btn-small white delete-icon">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-                        </div>
-                     
-                    </div>
-                    <div class="collapsible-body">
-                        {% if budget.categories.keys() | length > 0 %}
+            <li>
+                <div class="collapsible-header my-row teal-text text-shadow">
 
-                        <ul class="collection teal white-text">
-                            {% for category in budget.categories.keys() %}
-                            <li>
-                                <div class="my-row">
-                                    <div>{{ category.title() }}</div>
-                                    <div>Total: {{ budget.categories[category].total|float|currencyFormat }}   </div>
-                                </div>
-                                <ul class="collection black-text">
-                                    {% for item in budget.categories[category]["items"] %}
-                                        <li class="collection-item">
-                                            <div class="my-row">
-                                                <div class="">{{ item.name.title() }} </div>
-                                                <div class="">{{ item.amount|float|currencyFormat }}</div>
-                                            </div>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                        {% endif %}
+                    <div>{{ budget.name.title() }}</div>
+                    <div>
+                        <a href="{{ url_for('delete_budget', budget_id=budget._id) }}"
+                            class="btn-small white delete-icon">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
                     </div>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
+
+                </div>
+                <div class="collapsible-body">
+                    {% if budget.categories.keys() | length > 0 %}
+
+                    <ul class="collection teal white-text">
+                        {% for category in budget.categories.keys() %}
+                        <li>
+                            <div class="my-row">
+                                <div>{{ category.title() }}</div>
+                                <div>Total: {{ budget.categories[category].total|float|currencyFormat }} </div>
+                            </div>
+                            <ul class="collection black-text">
+                                {% for item in budget.categories[category]["items"] %}
+                                <li class="collection-item">
+                                    <div class="my-row">
+                                        <div class="">{{ item.name.title() }} </div>
+                                        <div class="">{{ item.amount|float|currencyFormat }}</div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
         {% endif %}
     </li>
     {% endfor %}
 </ul>
-
-
-
 
 {% endblock %}

@@ -1,106 +1,98 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <div class="row">
-        <div class="col s12 m12">
+<div class="row">
+    <div class="col s12 m12">
         <div class="card white darken-1">
             <div class="card-content teal-text center-align">
-            <span class="card-title"><strong>EDIT YOUR PROJECT</strong></span>
-            <p>Make changes to any of the fields in the form below for your project. Once you are happy with the changes,
-                click the Edit button to update your project.  
-            </p>
-            <p>If you don't want to make any changes click Cancel to go back to your projects</p>    
+                <span class="card-title"><strong>EDIT YOUR PROJECT</strong></span>
+                <p>Make changes to any of the fields in the form below for your project. Once you are happy with the
+                    changes,
+                    click the Edit button to update your project.
+                </p>
+                <p>If you don't want to make any changes click Cancel to go back to your projects</p>
             </div>
         </div>
-        </div>
     </div>
+</div>
 
-    <div class="row">
-        <form class="col s12 m10 offset-m1" method="POST" action="{{ url_for('edit_project', project_id = project._id) }}">
-            <div class="card-panel white padding-forms">
-                <!-- project name -->
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="project_name" name="project_name" type="text" 
-                            value="{{project.project_name}}"    minlength="5" maxlength="50"  class="validate" required>
-                        <label for="project_name">Project Name</label>
-                    </div>
+<div class="row">
+    <form class="col s12 m10 offset-m1" method="POST" action="{{ url_for('edit_project', project_id = project._id) }}">
+        <div class="card-panel white padding-forms">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="project_name" name="project_name" type="text" value="{{project.project_name}}"
+                        minlength="5" maxlength="50" class="validate" required>
+                    <label for="project_name">Project Name</label>
                 </div>
-                <!-- currency -->
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="project_currency" name="project_currency" type="text" 
-                            value="{{project.project_currency}}" minlength="2" maxlength="3" class="validate" required>
-                        <label for="project_currency">Currency</label>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="project_currency" name="project_currency" type="text"
+                        value="{{project.project_currency}}" minlength="2" maxlength="3" class="validate" required>
+                    <label for="project_currency">Currency</label>
                 </div>
-                <!-- date picker -->
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="project_start_date" name="project_start_date" type="text" 
-                            value="{{project.project_start_date}}"   class="datepicker validate" required>
-                        <label for="project_start_date">Start Date</label>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="project_start_date" name="project_start_date" type="text"
+                        value="{{project.project_start_date}}" class="datepicker validate" required>
+                    <label for="project_start_date">Start Date</label>
                 </div>
-
-                <!-- print existing categories JS-->
-                <div class="row category padding-forms" id="exiting-categories">
-                {% for category in project.project_categories %} 
-                        <div class="row category" id="{{loop.index}}category">
-                            <div class="input-field col s5 m5">
-                                <input name="{{loop.index}}category" name="{{loop.index}}category" type="text" 
-                                    value="{{category.name}}" minlength="5" maxlength="50"  class="validate">
-                                <label for="{{loop.index}}category">Category Name</label>
-                            </div>
-                            <div class="input-field col s5 m5">
-                                <select name="{{loop.index}}category" class="validate">
-                                    <option value="{{category.measure}}" selected class="greyed-out">{{category.measure}}</option>
-                                    <option value="per unit">per unit</option>
-                                    <option value="per hour">per hour</option>
-                                    <option value="per day">per day</option>
-                                </select>   
-                            </div>
-                            <div class="col s2 m2">
-                                {% if loop.index == 1 %}
-                                    <div  class="input-field col">Required</div>
-                                {% else %}
-                                    <div class="btn red delete-category"><i class="fas fa-times"></i>
-                                    </div>
-                                {% endif %}
-                            </div>
+            </div>
+            <div class="row category padding-forms" id="exiting-categories">
+                {% for category in project.project_categories %}
+                <div class="row category" id="{{loop.index}}category">
+                    <div class="input-field col s5 m5">
+                        <input name="{{loop.index}}category" name="{{loop.index}}category" type="text"
+                            value="{{category.name}}" minlength="5" maxlength="50" class="validate">
+                        <label for="{{loop.index}}category">Category Name</label>
+                    </div>
+                    <div class="input-field col s5 m5">
+                        <select name="{{loop.index}}category" class="validate">
+                            <option value="{{category.measure}}" selected class="greyed-out">{{category.measure}}
+                            </option>
+                            <option value="per unit">per unit</option>
+                            <option value="per hour">per hour</option>
+                            <option value="per day">per day</option>
+                        </select>
+                    </div>
+                    <div class="col s2 m2">
+                        {% if loop.index == 1 %}
+                        <div class="input-field col">Required</div>
+                        {% else %}
+                        <div class="btn red delete-category"><i class="fas fa-times"></i>
                         </div>
-                        
-                        {% endfor %}
+                        {% endif %}
+                    </div>
                 </div>
-                <!-- add categories  -->
-                <div class="row category" id="categories">
-                </div>
-                              
-                <div class="btn" id="add-category">ADD CATEGORY</div>    
-               
-                <!-- buttons -->
-                <div class="row center-align">
-                    <!-- cancel button -->
-                    <a href="{{url_for('projects')}}" class="btn-large red text-shadow">Cancel</a>
-                    <!-- edit button -->
-                    <button class="teal btn-large" type="submit">Edit
-                        <i class="fas fa-sign-in-alt right"></i>
-                    </button>
-                </div>
+
+                {% endfor %}
             </div>
-        </form>
-    </div>
+            <div class="row category" id="categories">
+            </div>
+
+            <div class="btn" id="add-category">ADD CATEGORY</div>
+
+            <div class="row center-align">
+                <a href="{{url_for('projects')}}" class="btn-large red text-shadow">Cancel</a>
+                <button class="teal btn-large" type="submit">Edit
+                    <i class="fas fa-sign-in-alt right"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 
 {% endblock %}
 
 {% block scripts %}
-    <script>
-        $(`.delete-category`).each(function(){
-              $(this).click(function(){
-                $(this).closest(".category").remove()
-             })
-        
+<script>
+    $(`.delete-category`).each(function () {
+        $(this).click(function () {
+            $(this).closest(".category").remove()
         })
-    </script> 
 
+    })
+</script>
 {% endblock %}
