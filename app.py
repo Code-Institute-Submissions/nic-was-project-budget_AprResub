@@ -19,8 +19,6 @@ mongo = PyMongo(app)
 
 # Currency formats
 @app.template_filter()
-
-
 def currencyFormat(value):
     value = float(value)
     return "{:,.2f}".format(value)
@@ -28,15 +26,11 @@ def currencyFormat(value):
 
 @app.route("/")
 @app.route("/home")
-
-
 def home():
     return render_template("home.html")
 
 
 @app.route("/projects")
-
-
 def projects():
 
     if not session.get("user", None):
@@ -50,8 +44,6 @@ def projects():
 
 
 @app.route("/register", methods=["GET", "POST"])
-
-
 def register():
     if request.method == "POST":
         # check if email address already exists
@@ -78,9 +70,7 @@ def register():
     return render_template("register.html")
 
 
-@app.route("/login", methods = ["GET", "POST"])
-
-
+@app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         # check if email address already exists
@@ -91,9 +81,9 @@ def login():
             # check to see if pw entered matches hashed pw in db
             if check_password_hash(existing_email["password"],
                                    request.form.get("password")):
-                    session["user"] = request.form.get("email").lower()
-                    flash("Welcome, {}!".format(
-                            existing_email["first_name"].capitalize()))
+                session["user"] = request.form.get("email").lower()
+                flash("Welcome, {}!".format(
+                      existing_email["first_name"].capitalize()))
             return redirect(url_for("budgets",
                             username=session["user"]))
             else:
@@ -108,8 +98,6 @@ def login():
 
 
 @app.route("/logout")
-
-
 def logout():
 
     if not session.get("user", None):
@@ -121,9 +109,7 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/create_project", methods = ["GET", "POST"])
-
-
+@app.route("/create_project", methods=["GET", "POST"])
 def create_project():
 
     if not session.get("user", None):
@@ -157,8 +143,6 @@ def create_project():
 
 
 @app.route("/edit_project/<project_id>", methods=["GET", "POST"])
-
-
 def edit_project(project_id):
 
     if not session.get("user", None):
@@ -193,8 +177,6 @@ def edit_project(project_id):
 
 
 @app.route("/delete_project/<project_id>")
-
-
 def delete_project(project_id):
     if not session.get("user", None):
         return redirect(url_for("login"))
@@ -205,8 +187,6 @@ def delete_project(project_id):
 
 
 @app.route("/budgets")
-
-
 def budgets():
 
     if not session.get("user", None):
@@ -252,8 +232,6 @@ def budgets():
 
 
 @app.route("/add_budget/<project_id>", methods=["GET", "POST"])
-
-
 def add_budget(project_id):
     project = mongo.db.projects.find_one(
         {"_id": ObjectId(project_id), "created_by": session["user"]})
@@ -288,8 +266,6 @@ def add_budget(project_id):
 
 
 @app.route("/delete_budget/<budget_id>")
-
-
 def delete_budget(budget_id):
     if not session.get("user", None):
         return redirect(url_for("login"))
@@ -300,6 +276,6 @@ def delete_budget(budget_id):
 
 
 if __name__ == "__main__":
-    app.run(host = os.environ.get("IP"),
-            port = int(os.environ.get("PORT")),
-            debug = False)
+    app.run(host=os.environ.get("IP"),
+            port=int(os.environ.get("PORT")),
+            debug=False)
